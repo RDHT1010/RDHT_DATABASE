@@ -474,15 +474,13 @@ function LoadingAuto(text, speed)
         gg.sleep(speed or 3)
     end
 end
-function menuUtama()
-    local menu = gg.choice({
-        "✨ | UNLIMITED SEND (REGULAR|GOLD|LEGENDARY) ",
-        "✨ | CHANGE QUANTITY CARD",
-		"✨ | CHANGE QUANTITY CARD INSTAN",
-		"✨️ | CARD PACK UNLOCK ",
-        "🔚 | BACK"
-    }, nil, 
-)
+local menu = gg.choice({
+    "✨ | UNLIMITED SEND (REGULAR|GOLD|LEGENDARY)",
+    "✨ | CHANGE QUANTITY CARD",
+    "✨ | CHANGE QUANTITY CARD INSTAN",
+    "✨ | CARD PACK UNLOCK",
+    "🔚 | BACK"
+}, nil, "SCRIPT CARD")
     
     if menu == 1 then
     Unlimited_Send()
