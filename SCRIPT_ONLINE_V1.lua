@@ -50049,36 +50049,80 @@ local version = info.versionName or "Unknown"
 return game, version
 end
 
+API_URL =
+"https://script.google.com/macros/s/AKfycbw8G3Kn8wfF9nXPKnm_CXRJCvOiyzfCq0tCKr_XYGJo/exec"
+
+function urlEncode(str)
+
+    str = tostring(str)
+
+    str = str:gsub("\n", "\r\n")
+
+    str = str:gsub("([^%w%-_%.~])", function(c)
+
+        return string.format(
+            "%%%02X",
+            string.byte(c)
+        )
+    end)
+    return str
+end
 USER_NAME = "-"
 USER_EXPIRED = "-"
 USER_CODE = "-"
+USER_STATUS = "-"
 USER_LOADED = false
+
 function Load_User_Info()
-    local url = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/LICENSE_KEYS_USER"
+
+    local url =
+        API_URL ..
+        "?action=info" ..
+        "&device=" .. urlEncode(getDeviceID())
 
     local response = gg.makeRequest(url)
 
-    if not response or response.code ~= 200 then
+    if not response then
         return false
     end
 
-    local myDevice = getDeviceID() -- function milikmu
-
-    for line in response.content:gmatch("[^\r\n]+") do
-        local name, code, device, expired =
-            line:match("^([^|]+)|([^|]+)|([^|]+)|([^|]+)$")
-
-			if device == myDevice then
-			
-			USER_NAME = name
-			USER_CODE = code
-			USER_EXPIRED = expired
-			
-			    return true
-			end
+    if response.code ~= 200 then
+        return false
     end
 
-    return false
+    if not response.content then
+        return false
+    end
+
+    local txt = response.content:gsub("\r",""):gsub("\n","")
+
+    if txt == "NOT_FOUND" then
+        return false
+    end
+
+    if txt == "INVALID" then
+        return false
+    end
+
+    local result,
+          name,
+          code,
+          status,
+          expired =
+    txt:match("^([^|]+)|([^|]+)|([^|]+)|([^|]+)|(.+)$")
+
+    if result ~= "OK" then
+        return false
+    end
+
+    USER_NAME = name
+    USER_CODE = code
+    USER_STATUS = status
+    USER_EXPIRED = expired
+    USER_LOADED = true
+
+    return true
+
 end
 
 local function getDateTime()
@@ -50092,6 +50136,7 @@ local function getDateTime()
         "Mei", "Juni", "Juli", "Agustus",
         "September", "Oktober", "November", "Desember"
     }
+
     local t = os.date("*t")
 
     return string.format(
@@ -50107,20 +50152,28 @@ end
 
 function GetRemainingTime(expired)
 
+    if not expired or expired == "" then
+        return "UNKNOWN"
+    end
+
+    if expired == "LIFETIME" then
+        return "LIFETIME"
+    end
+
     local y, m, d, h, mi, s =
-        expired:match("(%d+)%-(%d+)%-(%d+) (%d+):(%d+):(%d+)")
+        expired:match("^(%d+)%-(%d+)%-(%d+) (%d+):(%d+):(%d+)$")
 
     if not y then
         return "UNKNOWN"
     end
 
     local expireTime = os.time({
-        year = tonumber(y),
+        year  = tonumber(y),
         month = tonumber(m),
-        day = tonumber(d),
-        hour = tonumber(h),
-        min = tonumber(mi),
-        sec = tonumber(s)
+        day   = tonumber(d),
+        hour  = tonumber(h),
+        min   = tonumber(mi),
+        sec   = tonumber(s)
     })
 
     local remain = expireTime - os.time()
@@ -50129,81 +50182,75 @@ function GetRemainingTime(expired)
         return "EXPIRED"
     end
 
-    local days = math.floor(remain / 86400)
+    local days  = math.floor(remain / 86400)
     local hours = math.floor((remain % 86400) / 3600)
-    local mins = math.floor((remain % 3600) / 60)
+    local mins  = math.floor((remain % 3600) / 60)
 
     return string.format("%dD %dH %dM", days, hours, mins)
 end
 
 function Get_Account_Info()
 
-    local info
     local game, version = VersionInfo()
+    local expiredText
+
     if USER_EXPIRED == "UNLIMITED" then
-        info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s", 
-            USER_NAME or "-",
-			getDateTime(),
-			USER_EXPIRED,
-			""..game.." | ⚙️"..version 
-        )
-elseif USER_EXPIRED == "LIFETIME" then
-        info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s", 
-            USER_NAME or "-",
-			getDateTime(),
-			USER_EXPIRED,
-			""..game.." | ⚙️"..version 
-        )
+        expiredText = "UNLIMITED ♾️"
+
+    elseif USER_EXPIRED == "LIFETIME" then
+        expiredText = "LIFETIME ♾️"
+
     else
-        info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s",
-            USER_NAME or "-",
-			getDateTime(),
-            USER_EXPIRED.."| "..GetRemainingTime(USER_EXPIRED or ""),
-			""..game.." | ⚙️"..version
+        expiredText = string.format(
+            "%s | %s",
+            USER_EXPIRED,
+            GetRemainingTime(USER_EXPIRED)
         )
     end
 
-    return string.format(
-[==[
-%s	
-]==], info)
+    return string.format([==[
+👤 %s
+📅 %s
+⏳ %s
+🎮 %s | ⚙️ %s
+]==],
+        USER_NAME or "-",
+        getDateTime(),
+        expiredText,
+        game,
+        version
+    )
 
 end
-
 function Welcome_Member()
 
-    local welcome
+    local expiredText
+
     if USER_EXPIRED == "UNLIMITED" then
-        welcome = string.format(
-            "👤 %s\n📅 %s\n⏳ %s", 
-            USER_NAME or "-",
-			getDateTime(),
-			"Lifetime ♾️".." | "..USER_EXPIRED
-        )
-	elseif USER_EXPIRED == "LIFETIME" then
-        welcome = string.format(
-            "👤 %s\n📅 %s\n⏳ %s", 
-            USER_NAME or "-",
-			getDateTime(),
-			USER_EXPIRED
-        )
+        expiredText = "UNLIMITED ♾️"
+
+    elseif USER_EXPIRED == "LIFETIME" then
+        expiredText = "LIFETIME ♾️"
+
     else
-        welcome = string.format(
-            "👤 %s\n📅 %s\n⏳ %s",
-            USER_NAME or "-",
-			getDateTime(),
-            USER_EXPIRED.."| "..GetRemainingTime(USER_EXPIRED or "")
+        expiredText = string.format(
+            "%s | %s",
+            USER_EXPIRED,
+            GetRemainingTime(USER_EXPIRED)
         )
     end
 
-    return string.format(
-[==[
-Login Successful🎉
-%s	
-]==], welcome)
+    return string.format([==[
+Login Successful 🎉
+
+👤 %s
+📅 %s
+⏳ %s
+]==],
+        USER_NAME or "-",
+        getDateTime(),
+        expiredText
+    )
 
 end
 
@@ -50308,50 +50355,34 @@ local function getAccessInfo(device)
 	    return table.concat(result, "\n")
 end
 
-local url = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/LICENSE_KEYS_USER"
+function Info_Account()
 
-local function getData()
-    local res = gg.makeRequest(url)
-
-    if not res or not res.content then
-        gg.alert("❌ Failed to fetch data!")
-        return nil
-    end
-
-    return res.content
-end
-
-local function Info_Account()
     LoadingAuto("Get Data Info", 5)
 
-    local data = getData()
-    if not data then return end
-
-    local myID = getDeviceID()
-    local result = ""
-
-    for line in data:gmatch("[^\r\n]+") do
-        local name, user, device, status =
-            line:match("([^|]+)|([^|]+)|([^|]+)|(.+)")
-
-        if device == myID then
-            result =
-				"🔑 USER INFORMATION".. "\n" ..
-				"═════════════════════════\n" ..
-                "👤 Name     : " .. name .. "\n" ..
-                "📱 UserId   : " .. device .. "\n" ..
-                "⏳ Expired  : " .. status.."\n"..
-				"═════════════════════════"
-
-            break
-        end
+    if not Load_User_Info() then
+        gg.alert("❌ Gagal mengambil informasi akun.")
+        return
     end
 
-    if result == "" then
-        result = "❌ Device tidak terdaftar"
+    local info =
+        "🔑 USER INFORMATION\n" ..
+        "═════════════════════════\n" ..
+        "👤 Name     : " .. (USER_NAME or "-") .. "\n" ..
+        "🔑 Key      : " .. (USER_CODE or "-") .. "\n" ..
+        "📌 Status   : " .. (USER_STATUS or "-") .. "\n" ..
+        "⏳ Expired  : " .. (USER_EXPIRED or "-")
+
+    if USER_EXPIRED ~= "LIFETIME"
+    and USER_EXPIRED ~= "UNLIMITED" then
+        info = info ..
+            " | " .. GetRemainingTime(USER_EXPIRED)
     end
 
-    gg.alert(result)
+    info = info ..
+        "\n═════════════════════════"
+
+    gg.alert(info)
+
 end
 
 
@@ -50429,16 +50460,20 @@ end
 function LogAccess(name, code, device, expired)
 
     local url =
-    "https://script.google.com/macros/s/AKfycbw4cKFBoyDGtBxq8oSlf0ZKFMl2vJrsj-C3qSxGxFXb_2xjeNvvFPhWTN52wJy4SKp1CA/exec" ..
+    "https://script.google.com/macros/s/AKfycbw8G3Kn8wfF9nXPKnm_CXRJCvOiyzfCq0tCKr_XYGJo/exec" ..
     "?name=" .. tostring(name) ..
     "&user=" .. tostring(code) ..
     "&device=" .. tostring(device) ..
     "&status=" .. tostring(expired)
 
     local res = gg.makeRequest(url)
-    if res then
+
+    if res and res.content then
         gg.toast(res.content)
+    else
+        gg.toast("Failed to send log.")
     end
+
 end
 -- =========================
 -- Fungsi Home Menu
