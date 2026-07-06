@@ -49988,34 +49988,6 @@ function EXIT()
   os.exit()
 end
 
-function VersionInfo()
-local info = gg.getTargetInfo()
-local game = info.label or "Unknown"
-local version = info.versionName or "Unknown"
-
-return game, version
-end
-
-API_URL =
-"https://script.google.com/macros/s/AKfycbyp_9lu8K6TsmOkwVynI971jY7UZMJYN1244wgSSAQJz5N63vGLFHQfNi0a4NqDMpytAw/exec"
-
-function urlEncode(str)
-
-    str = tostring(str)
-
-    str = str:gsub("\n", "\r\n")
-
-    str = str:gsub("([^%w%-_%.~])", function(c)
-
-        return string.format(
-            "%%%02X",
-            string.byte(c)
-        )
-    end)
-    return str
-end
-
-
 local pilih = gg.alert([[
 
 🔒 ACCESS DENIED 🔒
