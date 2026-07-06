@@ -50050,7 +50050,7 @@ return game, version
 end
 
 API_URL =
-"https://script.google.com/macros/s/AKfycbw8G3Kn8wfF9nXPKnm_CXRJCvOiyzfCq0tCKr_XYGJo/exec"
+"https://script.google.com/macros/s/AKfycbyp_9lu8K6TsmOkwVynI971jY7UZMJYN1244wgSSAQJz5N63vGLFHQfNi0a4NqDMpytAw/exec"
 
 function urlEncode(str)
 
@@ -50460,7 +50460,7 @@ end
 function LogAccess(name, code, device, expired)
 
     local url =
-    "https://script.google.com/macros/s/AKfycbw8G3Kn8wfF9nXPKnm_CXRJCvOiyzfCq0tCKr_XYGJo/exec" ..
+    "https://script.google.com/macros/s/AKfycbyp_9lu8K6TsmOkwVynI971jY7UZMJYN1244wgSSAQJz5N63vGLFHQfNi0a4NqDMpytAw/exec" ..
     "?name=" .. tostring(name) ..
     "&user=" .. tostring(code) ..
     "&device=" .. tostring(device) ..
