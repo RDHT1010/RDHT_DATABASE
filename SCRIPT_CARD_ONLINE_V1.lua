@@ -482,7 +482,7 @@ function menuUtama()
 		"✨️ | CARD PACK UNLOCK ",
         "🔚 | BACK"
     }, nil, 
-Header .. Get_Account_Info())
+)
     
     if menu == 1 then
     Unlimited_Send()
