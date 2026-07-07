@@ -5,7 +5,60 @@ local naousou = true
 local naousou2 = false
 local savedOriginals = {}
 
+local unlimitedDevice = {
+    ["RR-A120-A888"] = true, -- Admin
+    ["RR-6680-347C"] = true, -- Oyen
+    ["RR-07A0-6612"] = true, -- Khusus Admin"⚓ • SKIN 20 EASTER PORT",changlo
+    ["RR-05C6-635D"] = true, -- ripal
+    ["RR-B503-7EA9"] = true, -- ripal
+	["RR-4A9C-E0DC"] = true,
+	["RR-6846-D9B4"] = true, -- non
+    ["RR-8ECA-193B"] = true, -- arr
+	["RR-7BAD-0472"] = true,
+	["RR-8F69-17E6"] = false,  --- astari ARR MANTEB|ARR|RR-8ECA-193B|LIFETIME
+	["RR-5336-2AAD"] = true
+}
 
+-- DEVICE YANG DIBLOKIR PERMANEN
+local blockedDevice = {
+	["RR-D0EB-4BBD"] = false,
+    ["RR-0000-0000"] = true
+}
+
+local myDevice = tostring(getDeviceID()):gsub("%s+", "")
+
+-- BLOKIR PERMANEN
+if blockedDevice[myDevice] then
+    gg.alert("AKSES DIBLOKIR!! user menyebalkan😛")
+    os.exit()
+end
+
+-- MODE MAINTENANCE
+local MAINTENANCE = false
+
+if MAINTENANCE and not unlimitedDevice[myDevice] then
+    gg.alert(
+        "🚧 SERVER MAINTENANCE 🚧\n\n" ..
+        "Silakan coba lagi nanti."
+    )
+    os.exit()
+end
+
+-- CEK JAM OPERASIONAL (hanya untuk non-admin)
+if not unlimitedDevice[myDevice] then
+    local t = os.date("*t")
+    local sekarang = t.hour * 3600 + t.min * 60 + t.sec
+    local mulai = 6 * 3600 -- 06:00:00
+
+    if sekarang < mulai then
+        gg.alert(
+            "😴 Server sedang offline.\n\n" ..
+            "Jam operasional server: 06:00 - 00:00 WIB.\n" ..
+            "Silakan coba lagi pada jam operasional."
+        )
+        os.exit()
+    end
+end
 local target = "com.playrix.township"
 local pkg = gg.getTargetPackage()
 
@@ -49988,6 +50041,373 @@ function EXIT()
   os.exit()
 end
 
+function VersionInfo()
+local info = gg.getTargetInfo()
+local game = info.label or "Unknown"
+local version = info.versionName or "Unknown"
+
+return game, version
+end
+
+USER_NAME = "-"
+USER_EXPIRED = "-"
+USER_CODE = "-"
+USER_LOADED = false
+function Load_User_Info()
+    local url = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/LICENSE_KEYS_USERS"
+
+    local response = gg.makeRequest(url)
+
+    if not response or response.code ~= 200 then
+        return false
+    end
+
+    local myDevice = getDeviceID() -- function milikmu
+
+    for line in response.content:gmatch("[^\r\n]+") do
+        local name, code, device, expired =
+            line:match("^([^|]+)|([^|]+)|([^|]+)|([^|]+)$")
+
+			if device == myDevice then
+			
+			USER_NAME = name
+			USER_CODE = code
+			USER_EXPIRED = expired
+			
+			    return true
+			end
+    end
+
+    return false
+end
+
+local function getDateTime()
+    local days = {
+        "Minggu", "Senin", "Selasa", "Rabu",
+        "Kamis", "Jumat", "Sabtu"
+    }
+
+    local months = {
+        "Januari", "Februari", "Maret", "April",
+        "Mei", "Juni", "Juli", "Agustus",
+        "September", "Oktober", "November", "Desember"
+    }
+    local t = os.date("*t")
+
+    return string.format(
+        "%s, %02d %s %04d | ⏱️ %02d:%02d",
+        days[t.wday],
+        t.day,
+        months[t.month],
+        t.year,
+        t.hour,
+        t.min
+    )
+end
+
+function GetRemainingTime(expired)
+
+    local y, m, d, h, mi, s =
+        expired:match("(%d+)%-(%d+)%-(%d+) (%d+):(%d+):(%d+)")
+
+    if not y then
+        return "UNKNOWN"
+    end
+
+    local expireTime = os.time({
+        year = tonumber(y),
+        month = tonumber(m),
+        day = tonumber(d),
+        hour = tonumber(h),
+        min = tonumber(mi),
+        sec = tonumber(s)
+    })
+
+    local remain = expireTime - os.time()
+
+    if remain <= 0 then
+        return "EXPIRED"
+    end
+
+    local days = math.floor(remain / 86400)
+    local hours = math.floor((remain % 86400) / 3600)
+    local mins = math.floor((remain % 3600) / 60)
+
+    return string.format("%dD %dH %dM", days, hours, mins)
+end
+
+function Get_Account_Info()
+
+    local info
+    local game, version = VersionInfo()
+    if USER_EXPIRED == "UNLIMITED" then
+        info = string.format(
+            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s", 
+            USER_NAME or "-",
+			getDateTime(),
+			USER_EXPIRED,
+			""..game.." | ⚙️"..version 
+        )
+elseif USER_EXPIRED == "LIFETIME" then
+        info = string.format(
+            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s", 
+            USER_NAME or "-",
+			getDateTime(),
+			USER_EXPIRED,
+			""..game.." | ⚙️"..version 
+        )
+    else
+        info = string.format(
+            "👤 %s\n📅 %s\n⏳ %s\n🎮 %s",
+            USER_NAME or "-",
+			getDateTime(),
+            USER_EXPIRED.."| "..GetRemainingTime(USER_EXPIRED or ""),
+			""..game.." | ⚙️"..version
+        )
+    end
+
+    return string.format(
+[==[
+%s	
+]==], info)
+
+end
+
+function Welcome_Member()
+
+    local welcome
+    if USER_EXPIRED == "UNLIMITED" then
+        welcome = string.format(
+            "👤 %s\n📅 %s\n⏳ %s", 
+            USER_NAME or "-",
+			getDateTime(),
+			"Lifetime ♾️".." | "..USER_EXPIRED
+        )
+	elseif USER_EXPIRED == "LIFETIME" then
+        welcome = string.format(
+            "👤 %s\n📅 %s\n⏳ %s", 
+            USER_NAME or "-",
+			getDateTime(),
+			USER_EXPIRED
+        )
+    else
+        welcome = string.format(
+            "👤 %s\n📅 %s\n⏳ %s",
+            USER_NAME or "-",
+			getDateTime(),
+            USER_EXPIRED.."| "..GetRemainingTime(USER_EXPIRED or "")
+        )
+    end
+
+    return string.format(
+[==[
+Login Successful🎉
+%s	
+]==], welcome)
+
+end
+
+local URLS = {
+    ["Search Skin"]  = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_SEARCH_DEKOR",
+    Achievement      = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ACHIEVMENTS",
+    ["Unlock Animal"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ANIMAL",
+    ["Unlock Artifact"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ARTEFAK",
+    Card             = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_CARD",
+    Regatta          = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_REGATTA"
+}
+
+local function checkNameInFile(device, url)
+    local res = gg.makeRequest(url)
+
+    if not res or not res.content then
+        return false
+    end
+
+    for line in res.content:gmatch("[^\r\n]+") do
+        local name, user, deviceID, status =
+            line:match("([^|]+)|([^|]+)|([^|]+)|(.+)")
+
+        if deviceID == device then
+            return true
+        end
+    end
+
+    return false
+end
+
+local function getAccessInfo(device)
+    local result = {}
+
+    local features = {
+		{"Search Skin", "🔎"},
+        {"Achievement", "🏆"},
+        {"Unlock Animal", "🐾"},
+        {"Unlock Artifact", "🏺"},
+        {"Card", "🃏"},
+        {"Regatta", "⛵"}
+    }
+
+    local unlocked = 0
+    local total = #features
+
+    for _, item in ipairs(features) do
+        local feature = item[1]
+        local icon = item[2]
+        -- Cek apakah feature aktif untuk device
+        local active = checkNameInFile(device, URLS[feature])
+        if active then
+            unlocked = unlocked + 1
+        end
+        -- Tambahkan info feature
+        table.insert(
+            result,
+            string.format(
+                "%s %-16s ➜ %s",
+                icon,
+                feature,
+                active and "Active" or "Inactive"
+            )
+        )
+    end
+
+    -- ===== Progress Bar Aman =====
+    -- ===== Progress Bar =====
+	unlocked = tonumber(unlocked) or 0
+	total = tonumber(total) or 1
+	
+	local barLength = 6
+	
+	local percent = math.floor((unlocked / total) * 100)
+	
+	local filled = math.floor((unlocked * barLength) / total + 0.5)
+	
+	if unlocked > 0 and filled < 1 then
+	    filled = 1
+	end
+	
+	if filled > barLength then
+	    filled = barLength
+	end
+	
+	local bar = string.rep("■", filled) ..
+	            string.rep("□", barLength - filled)
+	
+	table.insert(result, "")
+	table.insert(
+	    result,
+	    string.format(
+	        "📊 Feature : [%s] %d/%d (%d%%)",
+	        bar,
+	        unlocked,
+	        total,
+	        percent
+	    )
+	)
+	    table.insert(result, "━━━━━━━━━━━━━━━━━━━━")
+	
+	    return table.concat(result, "\n")
+end
+
+local url = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/LICENSE_KEYS_USERS"
+
+local function getData()
+    local res = gg.makeRequest(url)
+
+    if not res or not res.content then
+        gg.alert("❌ Failed to fetch data!")
+        return nil
+    end
+
+    return res.content
+end
+
+local function Info_Account()
+    LoadingAuto("Get Data Info", 5)
+
+    local data = getData()
+    if not data then return end
+
+    local myID = getDeviceID()
+    local result = ""
+
+    for line in data:gmatch("[^\r\n]+") do
+        local name, user, device, status =
+            line:match("([^|]+)|([^|]+)|([^|]+)|(.+)")
+
+        if device == myID then
+            result =
+				"🔑 USER INFORMATION".. "\n" ..
+				"═════════════════════════\n" ..
+                "👤 Name     : " .. name .. "\n" ..
+                "📱 UserId   : " .. device .. "\n" ..
+                "⏳ Expired  : " .. status.."\n"..
+				"═════════════════════════"
+
+            break
+        end
+    end
+
+    if result == "" then
+        result = "❌ Device tidak terdaftar"
+    end
+
+    gg.alert(result)
+end
+
+
+function Premium_Access()
+    LoadingAuto("Get Data Info", 5)
+
+    local data = getData()
+    if not data then return end
+
+    local myID = getDeviceID()
+    local result = ""
+
+    for line in data:gmatch("[^\r\n]+") do
+        local name, user, device, status =
+            line:match("([^|]+)|([^|]+)|([^|]+)|(.+)")
+
+        if device == myID then
+            result =
+                "⭐ PREMIUM FEATURES ⭐\n\n" ..
+                getAccessInfo(myID)
+
+            break
+        end
+    end
+
+    if result == "" then
+        result = "❌ Device tidak terdaftar"
+    end
+
+    gg.alert(result)
+end
+
+function CheckAccess(url, callback)
+local req = gg.makeRequest(url)
+
+if not req or not req.content then
+    gg.alert("❌ Failed to connect server")
+    return
+end
+
+local myID = getDeviceID()
+
+for line in req.content:gmatch("[^\r\n]+") do
+    local nama, kode, deviceID, expired =
+        line:match("([^|]+)|([^|]+)|([^|]+)|(.+)")
+
+    if deviceID == myID then
+        gg.toast("⭐ ACCESS FOR : " .. nama)
+
+        if callback then
+            callback()
+        end
+        return
+    end
+end
+
 local pilih = gg.alert([[
 
 🔒 ACCESS DENIED 🔒
@@ -50006,10 +50426,37 @@ if pilih == 2 then
 end
 end
 
+function LogAccess(name, code, device, expired)
+
+    local url =
+    "https://script.google.com/macros/s/AKfycbw4cKFBoyDGtBxq8oSlf0ZKFMl2vJrsj-C3qSxGxFXb_2xjeNvvFPhWTN52wJy4SKp1CA/exec" ..
+    "?name=" .. tostring(name) ..
+    "&user=" .. tostring(code) ..
+    "&device=" .. tostring(device) ..
+    "&status=" .. tostring(expired)
+
+    local res = gg.makeRequest(url)
+    if res then
+        gg.toast(res.content)
+    end
+end
 -- =========================
 -- Fungsi Home Menu
 -- =========================
 function Main_Menu()
+    if not USER_LOADED then
+        Load_User_Info()
+        USER_LOADED = true
+
+        LogAccess(
+            USER_NAME,
+            USER_CODE,
+            getDeviceID(),
+            USER_EXPIRED
+        )
+
+        gg.alert(Welcome_Member())
+    end
 
     Save_Last_Menu(nil)
 
@@ -50020,6 +50467,9 @@ function Main_Menu()
         "➤ | PREMIUM FEATURES",
         "➤ | EXIT SCRIPT"
     }, nil,
+    "          💻 SCRIPT BY RR | RDHT 💻 \n"..
+    "══════════════════════\n" ..
+    Get_Account_Info()
     )
 
     if opcao == nil then
