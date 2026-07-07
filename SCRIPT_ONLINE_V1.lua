@@ -3653,14 +3653,7 @@ MXC = gg.choice({
 ╚════════════════════════╝
 ]==])
     if MaxJE == nil then return end
-    if MaxJE == 1 then 
-	    CheckAccess(
-        "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_SEARCH_SKIN",
-        function()
-		SearchSkin()
-        end
-        )
-	end 
+    if MaxJE == 1 then SearchSkin()	end 
     if MaxJE == 2 then Menu_Option(101) end
     if MaxJE == 3 then Menu_Option(102) end
     if MaxJE == 4 then Menu_Option(103) end
@@ -6476,24 +6469,24 @@ elseif menu_tipo == 20000 then
     end
   if opcao == 1 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_CARD",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
             function()
             Menu_Option(100003)
             end
         )
    elseif opcao == 2 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ACHIEVMENTS",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
             Unlock_Achievements
         )
     elseif opcao == 3 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ARTEFAK",
+             "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
             Unlock_Artifact
         )
     elseif opcao == 4 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ANIMAL",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
             Unlock_Animal
         )
 	elseif opcao == 5 then
@@ -50208,11 +50201,10 @@ Login Successful🎉
 end
 
 local URLS = {
-    ["Search Skin"]  = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_SEARCH_DEKOR",
-    Achievement      = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ACHIEVMENTS",
-    ["Unlock Animal"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ANIMAL",
-    ["Unlock Artifact"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ARTEFAK",
-    Card             = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_CARD",
+    Achievement      =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+    ["Unlock Animal"] =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+    ["Unlock Artifact"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+    Card             =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
     Regatta          = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_REGATTA"
 }
 
@@ -50239,7 +50231,6 @@ local function getAccessInfo(device)
     local result = {}
 
     local features = {
-		{"Search Skin", "🔎"},
         {"Achievement", "🏆"},
         {"Unlock Animal", "🐾"},
         {"Unlock Artifact", "🏺"},
