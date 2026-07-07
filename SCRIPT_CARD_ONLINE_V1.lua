@@ -421,7 +421,7 @@ function Change_Quantity()
 	local totalFound = 0
     for _, anchor in ipairs(anchors) do
         gg.clearResults()
-		LoadingAuto("Searching Data" .. anchors .. "...", 2)
+		LoadingAuto("Searching Data", 2)
         gg.searchNumber(
             anchor .. ";" .. cari .. ":29",
             gg.TYPE_DWORD
@@ -506,7 +506,7 @@ function Change_Quantity_Instan()
 
                 gg.clearResults()
 				gg.toast("Duplicate Card : " .. cari)
-				LoadingAuto("Searching Data" .. anchors .. "...", 2)
+				LoadingAuto("Searching Data", 2)
                 gg.searchNumber(
                     anchor .. ";" .. cari .. ":29",
                     gg.TYPE_DWORD
