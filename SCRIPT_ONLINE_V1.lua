@@ -16,7 +16,7 @@ local unlimitedDevice = {
     ["RR-8ECA-193B"] = true, -- arr
 	["RR-7BAD-0472"] = true,
 	["RR-8F69-17E6"] = false,  --- astari ARR MANTEB|ARR|RR-8ECA-193B|LIFETIME
-	["RR-5336-2AAD"] = true
+	["RR-AAE3-B7FE"] = true
 }
 
 -- DEVICE YANG DIBLOKIR PERMANEN
