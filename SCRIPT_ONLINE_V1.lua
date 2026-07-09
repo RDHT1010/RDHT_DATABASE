@@ -6469,24 +6469,24 @@ elseif menu_tipo == 20000 then
     end
   if opcao == 1 then
         CheckAccess(
-            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/CARD",
             function()
             Menu_Option(100003)
             end
         )
    elseif opcao == 2 then
         CheckAccess(
-            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACHIEVEMENT",
             Unlock_Achievements
         )
     elseif opcao == 3 then
         CheckAccess(
-             "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+             "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ARTIFACT",
             Unlock_Artifact
         )
     elseif opcao == 4 then
         CheckAccess(
-            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+            "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ANIMAL",
             Unlock_Animal
         )
 	elseif opcao == 5 then
@@ -50201,10 +50201,10 @@ Login Successful🎉
 end
 
 local URLS = {
-    Achievement      =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
-    ["Unlock Animal"] =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
-    ["Unlock Artifact"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
-    Card             =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACCESS_PREMIUM_FEATURE",
+    Achievement      =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACHIEVEMENT",
+    ["Unlock Animal"] =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ANIMAL",
+    ["Unlock Artifact"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ARTIFACT",
+    Card             =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/CARD",
     Regatta          = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_REGATTA"
 }
 
