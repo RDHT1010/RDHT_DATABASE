@@ -6684,7 +6684,7 @@ function Surf_Goldpass()
     gg.TYPE_DWORD
   )
 
- gg.refineNumber("696B5328h", gg.TYPE_DWORD)
+ gg.refineNumber("696B5322h", gg.TYPE_DWORD)
 
  local results = gg.getResults(10)
 
