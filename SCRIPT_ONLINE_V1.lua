@@ -49183,11 +49183,11 @@ local menu = {
         func = Futuristic_Goldpass
     },
     {
-        label = pretty("SURF PASS"),
+        label = pretty("VOYAGE PASS"),
         func = Surf_Goldpass
     },
 	    {
-        label = pretty("VATICAN PASS"),
+        label = pretty("SUMMER PASS"),
         func = Vatican_Goldpass
     }
 }
