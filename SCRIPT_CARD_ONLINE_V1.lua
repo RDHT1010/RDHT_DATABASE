@@ -262,14 +262,21 @@ function Get_Account_Info()
             "👤 %s\n📅 %s\n⏳ %s\n", 
             USER_NAME or "-",
 			getDateTime(),
-			"Lifetime ♾️"
+			"LIFETIME ♾️"
         )
 	elseif USER_EXPIRED == "UNLIMITED" then
         info = string.format(
             "👤 %s\n📅 %s\n⏳ %s\n", 
             USER_NAME or "-",
 			getDateTime(),
-			"Lifetime ♾️"
+			"LIFETIME ♾️"
+		)
+		elseif USER_EXPIRED == "LIFETIME" then
+        info = string.format(
+            "👤 %s\n📅 %s\n⏳ %s\n", 
+            USER_NAME or "-",
+			getDateTime(),
+			"LIFETIME ♾️"
 		)
     else
         info = string.format(
