@@ -48572,7 +48572,7 @@ end
     gg.addListItems(allResults)
 
     gg.alert("✨️ UNLIMITED SEND AND CONVERT CARD DONE!!\n"..
-			 "Created by RDHT RMDN")
+			 "Created by RDHT")
 end
 
 function Change_Quantity()
@@ -48643,7 +48643,7 @@ function Change_Quantity()
 	    "📝 CURRENT CARD COUNT : " .. cari .. "\n" ..
 	    "📝 NEW CARD COUNT : " .. ganti .. "\n" ..
 	    "🔍 TOTAL RESULTS : " .. totalFound .. "\n" .. 
-		"Created by RDHT RMDN"
+		"Created by RDHT"
 	)
 end
 
@@ -48730,7 +48730,7 @@ gg.alert(
     "📝 CURRENT CARD COUNT : " .. bawah .. " → " .. atas .. "\n" ..
     "📝 NEW CARD COUNT : " .. ganti .. "\n" ..
     "🔍 TOTAL RESULTS : " .. totalFound .. "\n" ..
-	"Created by RDHT RMDN"
+	"Created by RDHT"
 )
 end
 
@@ -49158,7 +49158,7 @@ function Unlock_Artifact()
         gg.setValues(t)
         gg.alert(
 			"🏆 UNLOCK ARTIFACT SUCCESS 🏆\nEdited: "..#t.."\n" ..
-			"Created by RDHT RMDN")
+			"Created by RDHT")
     else
         gg.alert("❌ DATA NOT FOUND")
     end
