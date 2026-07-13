@@ -585,12 +585,12 @@ if not USER_LOADED then
 
 if USER_EXPIRED == "SAMPAI DIA CAPE DAN PERGI" then
     Header =
-    " 💻 SCRIPT By RR | RDHT\n" ..
+    " 💻 SCRIPT By IIIM | RDHT\n" ..
     " 🤝 SUPPORTED By : MF HOST\n" ..
     "════════════════\n"
 else
     Header =
-    " 💻SCRIPT BY RR | RDHT\n" ..
+    " 💻SCRIPT BY IIIM | RDHT\n" ..
     "════════════════\n"
 	end
     local menu = gg.choice({
