@@ -49777,13 +49777,13 @@ end
 
 local menu = {
     {
-        label = pretty("REWARD MULTIPLIER"),
+        label = pretty("REWARD MULTIPLIER | ⏱️ TIME"),
         func = function()
         time("lm8")
 end
     },
     {
-        label = pretty("NEW REWARD MULTIPLIER"),
+        label = pretty("REWARD MULTIPLIER | 🔢 AMOUNT"),
         func = hackMultiplier
     }
 }
