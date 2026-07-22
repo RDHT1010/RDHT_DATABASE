@@ -6492,7 +6492,7 @@ elseif menu_tipo == 20000 then
         )
 	elseif opcao == 5 then
         CheckAccess(
-       		"https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_REGATTA",
+       		"https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/REGATA",
             function()
             showRegattaMenu()
             REGATTA_MENU()
@@ -50206,7 +50206,7 @@ local URLS = {
     ["Unlock Animal"] =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ANIMAL",
     ["Unlock Artifact"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ARTIFACT",
     Card             =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/CARD",
-    Regatta          = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_REGATTA"
+    Regatta          = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/REGATA"
 }
 
 local function checkNameInFile(device, url)
