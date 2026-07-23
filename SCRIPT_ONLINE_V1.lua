@@ -28,7 +28,7 @@ end
 gg.alert(
         "⚠️ WARNING ⚠️\n\n" ..
         "Pada update Patch 37.0.0, Playrix membatasi pemain untuk tidak melakukan perubahan Kustomisasi Profil (Badge, Style Name, Frame, Title Expedition), diharapkan tidak melakukan pengisian untuk item-item tersebut, atau sistem akun kalian akan terblokir untuk akses pertemanan/join Coop"
-    )
+)
 local pilih = gg.alert([[
 📖 CARA MENGGUNAKAN SCRIPT
 1️⃣ CHANGE REWARD
