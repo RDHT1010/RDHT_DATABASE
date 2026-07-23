@@ -3603,14 +3603,7 @@ MXC = gg.choice({
 ╚════════════════════════╝
 ]==])
     if MaxJE == nil then return end
-    if MaxJE == 1 then 
-	    CheckAccess(
-        "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_SEARCH_SKIN",
-        function()
-		SearchSkin()
-        end
-        )
-	end 
+    if MaxJE == 1 then SearchSkin()	end 
     if MaxJE == 2 then Menu_Option(101) end
     if MaxJE == 3 then Menu_Option(102) end
     if MaxJE == 4 then Menu_Option(103) end
@@ -6426,29 +6419,29 @@ elseif menu_tipo == 20000 then
     end
   if opcao == 1 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_CARD",
+        "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/CARD",
             function()
             Menu_Option(100003)
             end
         )
    elseif opcao == 2 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ACHIEVMENTS",
+        "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACHIEVEMENT",
             Unlock_Achievements
         )
     elseif opcao == 3 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ARTEFAK",
+        "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ARTIFACT",
             Unlock_Artifact
         )
     elseif opcao == 4 then
         CheckAccess(
-            "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_ANIMAL",
+        "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ANIMAL",
             Unlock_Animal
         )
 	elseif opcao == 5 then
         CheckAccess(
-       		"https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/DATA_USER_REGATTA",
+        "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/REGATA",
             function()
             showRegattaMenu()
             REGATTA_MENU()
@@ -50004,7 +49997,7 @@ USER_EXPIRED = "-"
 USER_CODE = "-"
 USER_LOADED = false
 function Load_User_Info()
-    local url = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/refs/heads/main/LICENSE_KEYS_USER"
+    local url = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/LICENSE_KEYS_USERS"
 
     local response = gg.makeRequest(url)
 
@@ -50158,12 +50151,11 @@ Login Successful🎉
 end
 
 local URLS = {
-    ["Search Skin"]  = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_SEARCH_DEKOR",
-    Achievement      = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ACHIEVMENTS",
-    ["Unlock Animal"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ANIMAL",
-    ["Unlock Artifact"] = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_ARTEFAK",
-    Card             = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_CARD",
-    Regatta          = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/DATA_USER_REGATTA"
+    Achievement      =  "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ACHIEVEMENT",
+    ["Unlock Animal"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ANIMAL",
+    ["Unlock Artifact"] = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/ARTIFACT",
+    Card             = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/CARD",
+    Regatta          = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/REGATA",
 }
 
 local function checkNameInFile(device, url)
@@ -50189,7 +50181,6 @@ local function getAccessInfo(device)
     local result = {}
 
     local features = {
-		{"Search Skin", "🔎"},
         {"Achievement", "🏆"},
         {"Unlock Animal", "🐾"},
         {"Unlock Artifact", "🏺"},
@@ -50258,7 +50249,7 @@ local function getAccessInfo(device)
 	    return table.concat(result, "\n")
 end
 
-local url = "https://raw.githubusercontent.com/Oiim-TS/ONLINE_NEW/main/LICENSE_KEYS_USER"
+local url = "https://raw.githubusercontent.com/RDHT1010/RDHT_DATABASE/refs/heads/main/LICENSE_KEYS_USERS"
 
 local function getData()
     local res = gg.makeRequest(url)
