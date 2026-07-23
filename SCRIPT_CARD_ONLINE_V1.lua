@@ -542,6 +542,72 @@ gg.alert(
 )
 end
 
+function XP_Train()
+
+    local input = gg.prompt(
+        {"Masukkan jumlah Mahkota : (Maks 500)"},
+        {"1"},
+        {"number"}
+    )
+
+    if input == nil then return end
+
+    local crown = tonumber(input[1])
+    if crown == nil or crown < 1 or crown > 500 then
+        gg.alert("Hanya bisa angka 1 sampai 500")
+        return
+    end
+    gg.toast("Loading...")
+    gg.processResume()
+    gg.clearResults()
+
+    gg.searchNumber("1600407924;51", gg.TYPE_DWORD)
+    gg.refineNumber("51", gg.TYPE_DWORD)
+
+    local r = gg.getResults(3)
+
+    if not r or #r == 0 then
+        gg.alert("Anchor tidak ditemukan")
+        return
+    end
+
+    for i = 1, #r do
+
+        local base = r[i].address
+
+        gg.setValues({
+            {
+                address = base + 0x34,
+                flags = gg.TYPE_FLOAT,
+                value = 3
+            }
+        })
+
+        for g = 0, 4 do
+
+            local shift = g * 76 * 4
+
+            gg.setValues({
+                { address = base - (85 * 4) - shift, flags = gg.TYPE_DWORD, value = 1 }
+            })
+
+            gg.setValues({
+                { address = base - (96 * 4) - shift, flags = gg.TYPE_DWORD, value = crown },
+                { address = base - (97 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
+                { address = base - (98 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
+                { address = base - (99 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
+                { address = base - (100 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
+                { address = base - (101 * 4) - shift, flags = gg.TYPE_DWORD, value = 13407 },
+                { address = base - (102 * 4) - shift, flags = gg.TYPE_DWORD, value = 7169380 },
+                { address = base - (103 * 4) - shift, flags = gg.TYPE_DWORD, value = 1634296844 }
+            })
+
+        end
+    end
+
+    gg.toast("👑XP TRAIN ACTIVATED ")
+end
+
 function Exit_Script()
 
     local saved = gg.getListItems()
@@ -594,10 +660,10 @@ else
     "════════════════\n"
 	end
     local menu = gg.choice({
-        "✨ | UNLIMITED SEND (REGULAR|GOLD|LEGENDARY) ",
-        "✨ | CHANGE QUANTITY CARD",
-		"✨ | CHANGE QUANTITY CARD INSTAN",
-		"✨️ | CARD PACK UNLOCK ",
+        "🎴 | UNLIMITED SEND (REGULAR|GOLD|LEGENDARY) ",
+        "🎴 | CHANGE QUANTITY CARD",
+		"🎴 | CHANGE QUANTITY CARD INSTAN",
+		"👑 | EXP TRAIN (+ EXP AND COINS) ",
         "🔚 | BACK"
     }, nil, 
 Header .. Get_Account_Info())
@@ -609,8 +675,7 @@ elseif menu == 2 then
 elseif menu == 3 then
     Change_Quantity_Instan()
 elseif menu == 4 then
-    gg.alert("🎫 Go to Golden Ticket and open Reward Coupon No. 29")
-    Freeze_Reward_Coupon()
+    XP_Train()
 elseif menu == 5 then
     Exit_Script()
 end
