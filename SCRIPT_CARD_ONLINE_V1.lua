@@ -8,169 +8,6 @@ gg.alert([[
     Jalankan ➞ Masukkan Jumlah Batas Atas dan Bawah ➞ Tunggu Loading
 ]])
 
-function Freeze_Reward_Coupon()
-gg.clearResults()
-gg.clearList()
-
--- ===== MENU RANGE MEMORI =====
-local GEM = "💾"
-
-local function pretty(t)
-    return GEM .. "  " .. t
-end
-
-local labels = {
-    pretty("Ca + A"),
-    pretty("O"),
-    pretty("Ca + A + O"),
-}
-
-local ranges = {
-    gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS,                      -- Ca + A
-    gg.REGION_OTHER,                                             -- O
-    gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS | gg.REGION_OTHER    -- Ca + A + O
-}
-
-local choice = gg.choice(labels, nil, " ✅ Select Memory Range")
-
-if not choice then
-    gg.toast("❌ Cancelled")
-    os.exit()
-end
-
-gg.setRanges(ranges[choice])
-gg.toast("✅ Range Set")
-
--- ===== SCRIPT ASLI KAMU =====
-gg.getValues({
-    { address = 0xABCDEF12, flags = gg.TYPE_DWORD }
-})
-
-gg.searchNumber(
-    "1970225964;1599361808;1936025667;65537",
-    gg.TYPE_DWORD
-)
-
-gg.refineNumber("1970225964", gg.TYPE_DWORD)
-
-n = gg.getResultCount()
-jz = gg.getResults(n)
-
-
-  for i = 1, n do
-    gg.addListItems({[1] = {address = jz[i].address - 8,flags = gg.TYPE_DWORD,freeze = true,value = "0", name = "FREEZE_REWARD_01",gg.TYPE_DWORD}})
-    gg.addListItems({[1] = {address = jz[i].address - 12,flags = gg.TYPE_DWORD,freeze = true,value = "0",name = "FREEZE_REWARD_02", gg.TYPE_DWORD}})
-    gg.addListItems({[1] = {address = jz[i].address - 16,flags = gg.TYPE_DWORD,freeze = true,value = "0",name = "FREEZE_REWARD_03", gg.TYPE_DWORD}})
-  end 
-  gg.clearResults()
-  Change_Reward_Copon()
-  gg.alert(" 🥶 FREEZE COUPON SUCCESSFUL✅") 
-end
-
-function Change_Reward_Copon()
-
-gg.searchNumber("29;1970225964;7631471;1::", gg.TYPE_DWORD)
-
-gg.refineNumber("29", gg.TYPE_DWORD)
-
-local input = gg.prompt(
-    {"Masukkan nilai Modified_8:"},
-    {"2"},
-    {"number"}
-)
-
-if not input then
-    gg.toast("Dibatalkan")
-    return
-end
-
-local modified8 = tonumber(input[1])
-
-local results = gg.getResults(1)
-
-if #results == 0 then
-    gg.alert("Value not found! Please try again.")
-    return -- Stops script execution if nothing is found
-else
- 
- local v_1 = {}  
-v_1[1] = {}
-v_1[1].address = results[1].address + 0x10
-v_1[1].flags = gg.TYPE_DWORD
-v_1[1].value = "72614316h"
-v_1[1].name = "Modified_1"
-v_1[1].freeze = false
-gg.setValues(v_1)
-gg.addListItems(v_1) 
-local e_1 = {}
-e_1[1] = {}
-e_1[1].address = results[1].address + 0x14
-e_1[1].flags = gg.TYPE_DWORD
-e_1[1].value = "505F4364h"
-e_1[1].name = "Modified_2"
-e_1[1].freeze = false
-gg.setValues(e_1)
-gg.addListItems(e_1) 
-local p_1 = {}
-p_1[1] = {}
-p_1[1].address = results[1].address + 0x18
-p_1[1].flags = gg.TYPE_DWORD
-p_1[1].value = "356B6361h"
-p_1[1].name = "Modified_3"
-p_1[1].freeze = false
-gg.setValues(p_1)
-gg.addListItems(p_1) 
-local o_1 = {}
-o_1[1] = {}
-o_1[1].address = results[1].address + 0x1C
-o_1[1].flags = gg.TYPE_DWORD
-o_1[1].value = "00000000h"
-o_1[1].name = "Modified_4"
-o_1[1].freeze = false
-gg.setValues(o_1)
-gg.addListItems(o_1) 
-local ha_1 = {}
-ha_1[1] = {}
-ha_1[1].address = results[1].address + 0x20
-ha_1[1].flags = gg.TYPE_DWORD
-ha_1[1].value = "00000000h"
-ha_1[1].name = "Modified_5"
-ha_1[1].freeze = false
-gg.setValues(ha_1)
-gg.addListItems(ha_1) 
-local pa_1 = {}
-pa_1[1] = {}
-pa_1[1].address = results[1].address + 0x24
-pa_1[1].flags = gg.TYPE_DWORD
-pa_1[1].value = "00000000h"
-pa_1[1].name = "Modified_6"
-pa_1[1].freeze = false
-gg.setValues(pa_1)
-gg.addListItems(pa_1) 
-local ya_1 = {}
-ya_1[1] = {}
-ya_1[1].address = results[1].address + 0x28
-ya_1[1].flags = gg.TYPE_DWORD
-ya_1[1].value = 0
-ya_1[1].name = "Modified_7"
-ya_1[1].freeze = false
-gg.setValues(ya_1)
-gg.addListItems(ya_1) 
-local ya_2 = {}
-ya_2[1] = {}
-ya_2[1].address = results[1].address + 0x2C
-ya_2[1].flags = gg.TYPE_DWORD
-ya_2[1].value = modified8
-ya_2[1].name = "Modified_8"
-ya_2[1].freeze = false
-gg.setValues(ya_2)
-gg.addListItems(ya_2)   
- 
- 
-end
-
-end
-
 USER_NAME = "-"
 USER_EXPIRED = "-"
 USER_LOADED = false
@@ -542,21 +379,34 @@ gg.alert(
 )
 end
 
-function XP_Train()
+local XP_ITEM = {
+    CROWN = {1634296844, 7169380, 13407, 0, 0, 0},
+    WHEAT = {1701398036, 1752654956, 7627109, 0, 0, 0},
+    APPLE = {1634291234, 7169380, 54321, 0, 0, 0},
+}
+
+function XP_Train(itemName)
+
+    local item = XP_ITEM[itemName]
+    if not item then
+        gg.alert("Item tidak ditemukan : "..tostring(itemName))
+        return
+    end
 
     local input = gg.prompt(
-        {"Masukkan jumlah Mahkota : (Maks 500)"},
+        {"Masukkan jumlah "..itemName.." : (Maks 500)"},
         {"1"},
         {"number"}
     )
 
-    if input == nil then return end
+    if not input then return end
 
-    local crown = tonumber(input[1])
-    if crown == nil or crown < 1 or crown > 500 then
+    local amount = tonumber(input[1])
+    if amount == nil or amount < 1 or amount > 500 then
         gg.alert("Hanya bisa angka 1 sampai 500")
         return
     end
+
     gg.toast("Loading...")
     gg.processResume()
     gg.clearResults()
@@ -564,16 +414,15 @@ function XP_Train()
     gg.searchNumber("1600407924;51", gg.TYPE_DWORD)
     gg.refineNumber("51", gg.TYPE_DWORD)
 
-    local r = gg.getResults(3)
+    local result = gg.getResults(3)
 
-    if not r or #r == 0 then
+    if #result == 0 then
         gg.alert("Anchor tidak ditemukan")
         return
     end
 
-    for i = 1, #r do
-
-        local base = r[i].address
+    for _, r in ipairs(result) do
+        local base = r.address
 
         gg.setValues({
             {
@@ -583,31 +432,84 @@ function XP_Train()
             }
         })
 
-        for g = 0, 4 do
+        for g = 0,4 do
 
             local shift = g * 76 * 4
 
-            gg.setValues({
-                { address = base - (85 * 4) - shift, flags = gg.TYPE_DWORD, value = 1 }
-            })
+            local values = {
+                {
+                    address = base - (85 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = 1
+                },
+                {
+                    address = base - (96 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = amount
+                },
+                {
+                    address = base - (97 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = 0
+                }
+            }
 
-            gg.setValues({
-                { address = base - (96 * 4) - shift, flags = gg.TYPE_DWORD, value = crown },
-                { address = base - (97 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (98 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (99 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (100 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (101 * 4) - shift, flags = gg.TYPE_DWORD, value = 13407 },
-                { address = base - (102 * 4) - shift, flags = gg.TYPE_DWORD, value = 7169380 },
-                { address = base - (103 * 4) - shift, flags = gg.TYPE_DWORD, value = 1634296844 }
-            })
+            local offset = 103
+            for _, v in ipairs(item) do
+                table.insert(values,{
+                    address = base - (offset * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = v
+                })
+                offset = offset - 1
+            end
 
+            gg.setValues(values)
         end
     end
 
-    gg.toast("👑XP TRAIN ACTIVATED ")
+    gg.toast(itemName.." ACTIVATED")
 end
 
+function Card_Pack_And_Animal()
+gg.clearResults()
+
+local GIFT = ""
+
+local function pretty(t)
+    return GIFT .. "  " .. t 
+end
+
+local menu = {
+    {
+        label = pretty("👑 • WHEAT"),
+        func = function()
+        XP_Train("CROWN")
+end
+    },
+	{
+        label = pretty("🌾 • WHEAT"),
+        func = function()
+       XP_Train("WHEAT")
+end
+    },
+}
+
+local labels = {}
+for i, v in ipairs(menu) do
+    labels[i] = v.label
+end
+
+local choice = gg.choice(labels, nil, "🎯CHOOSE ITEMS")
+
+if not choice then
+    gg.toast("SELECT CARD")
+    gg.setVisible(false)
+    return
+end
+
+menu[choice].func()
+end
 function Exit_Script()
 
     local saved = gg.getListItems()
