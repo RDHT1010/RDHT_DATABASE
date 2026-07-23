@@ -6,23 +6,26 @@ local naousou2 = false
 local savedOriginals = {}
 
 
-local target = "com.playrix.township"
+local allowed = {
+    ["com.playrix.township"] = true,
+    ["com.playrix.township.vn"] = true
+}
+
 local pkg = gg.getTargetPackage()
 
-if pkg ~= target then
-   gg.alert([[
+if not allowed[pkg] then
+    gg.alert([[
 ═════════ஜ۩۞۩ஜ═════════             
-	           ~~~⚠️ ERROR ⚠️~~~   
+           ~~~⚠️ ERROR ⚠️~~~   
 ═════════ஜ۩۞۩ஜ═════════
 
-		📢Script is only MADE for :
-		 🌽Township Mobile Game🌽
-		
-✅Select Township in GameGuardian Process List
-		
+        📢 Script is only made for:
+        🌽 Township Mobile Game 🌽
+
+✅ Select Township in the GameGuardian process list.
+
 Detected package:
-]] .. tostring(pkg)		
-)
+]] .. tostring(pkg))
     os.exit()
 end
 gg.alert(
