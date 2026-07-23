@@ -6691,7 +6691,7 @@ function Surf_Goldpass()
     gg.TYPE_DWORD
   )
 
- gg.refineNumber("696B5328h", gg.TYPE_DWORD)
+ gg.refineNumber("696B5322h", gg.TYPE_DWORD)
 
  local results = gg.getResults(10)
 
@@ -49784,13 +49784,13 @@ end
 
 local menu = {
     {
-        label = pretty("REWARD MULTIPLIER"),
+        label = pretty("REWARD MULTIPLIER|⏱️ TIME"),
         func = function()
         time("lm8")
 end
     },
     {
-        label = pretty("NEW REWARD MULTIPLIER"),
+        label = pretty("REWARD MULTIPLIER|🔢 AMOUNT"),
         func = hackMultiplier
     }
 }
