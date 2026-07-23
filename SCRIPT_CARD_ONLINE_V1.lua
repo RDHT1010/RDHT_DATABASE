@@ -471,7 +471,7 @@ function XP_Train(itemName)
     gg.toast(itemName.." ACTIVATED")
 end
 
-function Card_Pack_And_Animal()
+function Items_Train()
 gg.clearResults()
 
 local GIFT = ""
@@ -482,7 +482,7 @@ end
 
 local menu = {
     {
-        label = pretty("👑 • WHEAT"),
+        label = pretty("👑 • CROWN"),
         func = function()
         XP_Train("CROWN")
 end
@@ -577,7 +577,7 @@ elseif menu == 2 then
 elseif menu == 3 then
     Change_Quantity_Instan()
 elseif menu == 4 then
-    XP_Train()
+    Items_Train()
 elseif menu == 5 then
     Exit_Script()
 end
