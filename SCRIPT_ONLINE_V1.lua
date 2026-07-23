@@ -5,60 +5,7 @@ local naousou = true
 local naousou2 = false
 local savedOriginals = {}
 
-local unlimitedDevice = {
-    ["RR-A120-A888"] = true, -- Admin
-    ["RR-6680-347C"] = true, -- Oyen
-    ["RR-07A0-6612"] = true, -- Khusus Admin"⚓ • SKIN 20 EASTER PORT",changlo
-    ["RR-05C6-635D"] = true, -- ripal
-    ["RR-B503-7EA9"] = true, -- ripal
-	["RR-4A9C-E0DC"] = true,
-	["RR-6846-D9B4"] = true, -- non
-    ["RR-8ECA-193B"] = true, -- arr
-	["RR-7BAD-0472"] = true,
-	["RR-8F69-17E6"] = false,  --- astari ARR MANTEB|ARR|RR-8ECA-193B|LIFETIME
-	["RR-5336-2AAD"] = true
-}
 
--- DEVICE YANG DIBLOKIR PERMANEN
-local blockedDevice = {
-	["RR-D0EB-4BBD"] = false,
-    ["RR-0000-0000"] = true
-}
-
-local myDevice = tostring(getDeviceID()):gsub("%s+", "")
-
--- BLOKIR PERMANEN
-if blockedDevice[myDevice] then
-    gg.alert("AKSES DIBLOKIR!! user menyebalkan😛")
-    os.exit()
-end
-
--- MODE MAINTENANCE
-local MAINTENANCE = false
-
-if MAINTENANCE and not unlimitedDevice[myDevice] then
-    gg.alert(
-        "🚧 SERVER MAINTENANCE 🚧\n\n" ..
-        "Silakan coba lagi nanti."
-    )
-    os.exit()
-end
-
--- CEK JAM OPERASIONAL (hanya untuk non-admin)
-if not unlimitedDevice[myDevice] then
-    local t = os.date("*t")
-    local sekarang = t.hour * 3600 + t.min * 60 + t.sec
-    local mulai = 6 * 3600 -- 06:00:00
-
-    if sekarang < mulai then
-        gg.alert(
-            "😴 Server sedang offline.\n\n" ..
-            "Jam operasional server: 06:00 - 00:00 WIB.\n" ..
-            "Silakan coba lagi pada jam operasional."
-        )
-        os.exit()
-    end
-end
 local target = "com.playrix.township"
 local pkg = gg.getTargetPackage()
 
