@@ -46922,6 +46922,18 @@ function Items_Train()
                 XP_Train("FEATHER_EAR_RINGS")
             end
         },
+        {
+            label = pretty("🍞 • BREAD | ROTI"),
+            func = function()
+                XP_Train("BREAD")
+            end
+        },
+        {
+            label = pretty("◽ • SUGAR | GULA"),
+            func = function()
+                XP_Train("SUGAR")
+            end
+        },
     }
 
     local labels = {}
