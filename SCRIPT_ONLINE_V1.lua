@@ -6236,10 +6236,10 @@ elseif menu_tipo == 100000 then
 elseif menu_tipo == 100001 then
     ENHANCMENT = gg.choice({
         "🚁 • HELICOPTER 0 ITEM",
-        "🚂 • TRAIN DELIVERY (+ XP & COINS)",
-        "🚂 • XP + CARD",
+        "🚂 • EXP TRAIN (+ EXP & COINS)",
+        "🚂 • EXP + CARD",
         "⏱️ • EXPRESS TRAIN (⏰FREE)",
-        "✈️ • PLAIN DELIVERY (+ XP & COINS)",
+        "✈️ • PLAIN DELIVERY (+ EXP & COINS)",
         "⏱️ • FLASH FLIGHT (⏰FREE)",
         "⏱️ • SPEED BOAT (⏰FREE)",
 		"📥 • ZOO ORDERS (+ COINS)",
@@ -6253,7 +6253,7 @@ elseif menu_tipo == 100001 then
 ]==])
 
 if ENHANCMENT == 1 then gg.alert("Menu Sedang Diperbaiki⚠️") return end --- Helicopter_0_Item()
-if ENHANCMENT == 2 then XP_Train() end
+if ENHANCMENT == 2 then Items_Train() end
 if ENHANCMENT == 3 then XP_Card_Train() end
 if ENHANCMENT == 4 then Time_Train() end
 if ENHANCMENT == 5 then gg.alert("Menu Sedang Diperbaiki⚠️") return end --- XP_Plane()
@@ -46779,21 +46779,37 @@ function Time_Train()
     gg.setValues(t)
 end
 
-function XP_Train()
+local XP_ITEM = {
+    PENDANT           = {1852141582, 1953390948, 0, 0, 0, 0},
+    RING              = {1852404232, 103, 0, 0, 0, 0},
+    PEARL_CHOKER      = {1634037778, 1701735538, 27491, 0, 0, 0},
+    EARRINGS          = {1918985488, 1735289202, 115, 0, 0, 0},
+    DIADEM            = {1634296844, 7169380, 13407, 0, 0, 0},
+    FEATHER_EAR_RINGS = {1634035230, 1919248500, 1920098629, 1936158313, 0, 0},
+}
+
+function XP_Train(itemName)
+
+    local item = XP_ITEM[itemName]
+    if not item then
+        gg.alert("Item tidak ditemukan : "..tostring(itemName))
+        return
+    end
 
     local input = gg.prompt(
-        {"Masukkan jumlah Mahkota : (1 - 500)"},
+        {"Masukkan jumlah "..itemName.." : (Maks 500)"},
         {"1"},
         {"number"}
     )
 
-    if input == nil then return end
+    if not input then return end
 
-    local crown = tonumber(input[1])
-    if crown == nil or crown < 1 or crown > 500 then
+    local amount = tonumber(input[1])
+    if amount == nil or amount < 1 or amount > 500 then
         gg.alert("Hanya bisa angka 1 sampai 500")
         return
     end
+
     gg.toast("Loading...")
     gg.processResume()
     gg.clearResults()
@@ -46801,16 +46817,15 @@ function XP_Train()
     gg.searchNumber("1600407924;51", gg.TYPE_DWORD)
     gg.refineNumber("51", gg.TYPE_DWORD)
 
-    local r = gg.getResults(3)
+    local result = gg.getResults(3)
 
-    if not r or #r == 0 then
+    if #result == 0 then
         gg.alert("Anchor tidak ditemukan")
         return
     end
 
-    for i = 1, #r do
-
-        local base = r[i].address
+    for _, r in ipairs(result) do
+        local base = r.address
 
         gg.setValues({
             {
@@ -46820,31 +46835,108 @@ function XP_Train()
             }
         })
 
-        for g = 0, 4 do
+        for g = 0,4 do
 
             local shift = g * 76 * 4
 
-            gg.setValues({
-                { address = base - (85 * 4) - shift, flags = gg.TYPE_DWORD, value = 1 }
-            })
+            local values = {
+                {
+                    address = base - (85 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = 1
+                },
+                {
+                    address = base - (96 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = amount
+                },
+                {
+                    address = base - (97 * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = 0
+                }
+            }
 
-            gg.setValues({
-                { address = base - (96 * 4) - shift, flags = gg.TYPE_DWORD, value = crown },
-                { address = base - (97 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (98 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (99 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (100 * 4) - shift, flags = gg.TYPE_DWORD, value = 0 },
-                { address = base - (101 * 4) - shift, flags = gg.TYPE_DWORD, value = 13407 },
-                { address = base - (102 * 4) - shift, flags = gg.TYPE_DWORD, value = 7169380 },
-                { address = base - (103 * 4) - shift, flags = gg.TYPE_DWORD, value = 1634296844 }
-            })
+            local offset = 103
+            for _, v in ipairs(item) do
+                table.insert(values,{
+                    address = base - (offset * 4) - shift,
+                    flags = gg.TYPE_DWORD,
+                    value = v
+                })
+                offset = offset - 1
+            end
 
+            gg.setValues(values)
         end
     end
 
-    gg.toast("👑XP TRAIN ACTIVATED ")
+    gg.toast(itemName.." ACTIVATED")
 end
 
+function Items_Train()
+    gg.clearResults()
+
+    local GIFT = ""
+
+    local function pretty(t)
+        return GIFT .. "  " .. t
+    end
+
+    local menu = {
+        {
+            label = pretty("📿 • PENDANT | LIONTIN"),
+            func = function()
+                XP_Train("PENDANT")
+            end
+        },
+        {
+            label = pretty("💍 • RING | CINCIN"),
+            func = function()
+                XP_Train("RING")
+            end
+        },
+        {
+            label = pretty("🦪 • PEARL CHOKER | KALUNG MUTIARA"),
+            func = function()
+                XP_Train("PEARL_CHOKER")
+            end
+        },
+        {
+            label = pretty("✨ • EARRINGS | ANTING"),
+            func = function()
+                XP_Train("EARRINGS")
+            end
+        },
+        {
+            label = pretty("👑 • DIADEM | MAHKOTA"),
+            func = function()
+                XP_Train("DIADEM")
+            end
+        },
+        {
+            label = pretty("🪶 • FEATHER EAR RINGS | ANTING BULU"),
+            func = function()
+                XP_Train("FEATHER_EAR_RINGS")
+            end
+        },
+    }
+
+    local labels = {}
+    for i, v in ipairs(menu) do
+        labels[i] = v.label
+    end
+
+    local choice = gg.choice(labels, nil, "🎯CHOOSE ITEMS")
+
+    if not choice then
+        gg.toast("SELECT CARD")
+        gg.setVisible(false)
+        return
+    end
+
+    menu[choice].func()
+end
 
 function XP_Card_Train()
 
