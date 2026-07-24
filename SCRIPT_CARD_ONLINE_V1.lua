@@ -218,6 +218,7 @@ end
 
     gg.alert("✨️ UNLIMITED SEND AND CONVERT CARD DONE!!\n"..
 	        "Author : RDHT RMDN")
+	Menu_Card()
 end
 
 function Change_Quantity()
@@ -290,6 +291,7 @@ function Change_Quantity()
 	    "🔍 TOTAL RESULTS : " .. totalFound .. "\n" .. 
 		"Author : RDHT RMDN"
 	)
+	Menu_Card()
 end
 
 function Change_Quantity_Instan()
@@ -297,43 +299,37 @@ function Change_Quantity_Instan()
     gg.setVisible(false)
     gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS | gg.REGION_OTHER)
 
-    local input = gg.prompt(
-        {
-            "📝 LOWER LIMIT :",
-            "📝 UPPER LIMIT (MAX 1000) :",
-            "📝 NEW CARD COUNT :"
-        },
-        {
-            1,
-            1,
-            500
-        },
-        {
-            "number",
-            "number",
-            "number"
-        }
-    )
+   local input = gg.prompt(
+{
+    "📝 CARD ID (contoh: 1;2;3;10;100)",
+    "📝 NEW CARD COUNT :"
+},
+{
+    "1;2;3",
+    500
+},
+{
+    "text",
+    "number"
+})
 
-    if not input then
-        gg.toast("❌ INPUT DIBATALKAN")
-        return
-    end
+if not input then
+    gg.toast("❌ INPUT DIBATALKAN")
+    return
+end
 
-    local bawah = tonumber(input[1])
-    local atas = tonumber(input[2])
-    local ganti = tonumber(input[3])
+local list = {}
+for num in string.gmatch(input[1], "%d+") do
+    table.insert(list, tonumber(num))
+end
 
-    if not bawah or not atas or not ganti then
-        gg.alert("❌ INVALID INPUT")
-        return
-    end
+local ganti = tonumber(input[2])
 
-    if bawah < 1 or atas > 1000 or bawah > atas then
-        gg.alert("❌ BATAS HARUS 1 - 1000")
-        return
-    end
-
+if #list == 0 then
+    gg.alert("❌ DAFTAR ANGKA KOSONG")
+    return
+end 
+	
     local anchors = {
         1918984974,
         1918984976
@@ -341,7 +337,7 @@ function Change_Quantity_Instan()
 
     local totalFound = 0
 
-    for cari = bawah, atas do
+   for _, cari in ipairs(list) do
 
         -- Skip angka 6
         if cari ~= 6 then
@@ -370,13 +366,16 @@ function Change_Quantity_Instan()
 
     gg.clearResults()
 
+local cardList = table.concat(list, ";")
+
 gg.alert(
     "✅ COMPLETED\n" ..
-    "📝 CURRENT CARD COUNT : " .. bawah .. " → " .. atas .. "\n" ..
+    "📝 CARD ID : " .. cardList .. "\n" ..
     "📝 NEW CARD COUNT : " .. ganti .. "\n" ..
     "🔍 TOTAL RESULTS : " .. totalFound .. "\n" ..
-	"Author : RDHT RMDN"
+    "Author : RDHT RMDN"
 )
+Menu_Card()
 end
 
 local XP_ITEM = {
@@ -545,42 +544,55 @@ function LoadingAuto(text, speed)
     end
 end
 function menuUtama()
-if not USER_LOADED then
+    if not USER_LOADED then
         Load_User_Info()
         USER_LOADED = true
     end
-	local Header
 
-if USER_EXPIRED == "SAMPAI DIA CAPE DAN PERGI" then
-    Header =
-    " 💻 SCRIPT By IIM | RDHT\n" ..
-    " 🤝 SUPPORTED By : MF HOST\n" ..
-    "════════════════\n"
-else
-    Header =
-    " 💻SCRIPT BY IIM | RDHT\n" ..
-    "════════════════\n"
-	end
+    local Header
+
+    if USER_EXPIRED == "SAMPAI DIA CAPE DAN PERGI" then
+        Header =
+        " 💻 SCRIPT By IIM | RDHT\n" ..
+        " 🤝 SUPPORTED By : MF HOST\n" ..
+        "════════════════\n"
+    else
+        Header =
+        " 💻 SCRIPT BY IIM | RDHT\n" ..
+        "════════════════\n"
+    end
+
     local menu = gg.choice({
-        "🎴 | UNLIMITED SEND (REGULAR|GOLD|LEGENDARY) ",
-        "🎴 | CHANGE QUANTITY CARD",
-		"🎴 | CHANGE QUANTITY CARD INSTAN",
-		"👑 | EXP TRAIN (+ EXP AND COINS) ",
+        "🎴 | CARD",
+        "👑 | EXP TRAIN (+ EXP AND COINS)",
         "🔚 | BACK"
-    }, nil, 
-Header .. Get_Account_Info())
-    
+    }, nil, Header .. Get_Account_Info())
+
     if menu == 1 then
-    Unlimited_Send()
-elseif menu == 2 then
-    Change_Quantity()
-elseif menu == 3 then
-    Change_Quantity_Instan()
-elseif menu == 4 then
-    Items_Train()
-elseif menu == 5 then
-    Exit_Script()
+        Menu_Card()
+    elseif menu == 2 then
+        Items_Train()
+    elseif menu == 3 then
+        Exit_Script()
+    end
 end
+function Menu_Card()
+    local menu = gg.choice({
+        "🎴 | UNLIMITED SEND (REGULAR | GOLD | LEGENDARY)",
+        "🎴 | CHANGE QUANTITY CARD",
+        "🎴 | CHANGE QUANTITY CARD INSTAN",
+        "🔙 | BACK"
+    }, nil, "🎴 CARD MENU")
+
+    if menu == 1 then
+        Unlimited_Send()
+    elseif menu == 2 then
+        Change_Quantity()
+    elseif menu == 3 then
+        Change_Quantity_Instan()
+	elseif menu == 4 or menu == nil then
+	    menuUtama()
+	end
 end
 -- ============================
 -- FUNGSI KEMBALI KE MENU
