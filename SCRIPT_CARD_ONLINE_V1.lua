@@ -379,9 +379,12 @@ Menu_Card()
 end
 
 local XP_ITEM = {
-    CROWN = {1634296844, 7169380, 13407, 0, 0, 0},
-    WHEAT = {1701398036, 1752654956, 7627109, 0, 0, 0},
-    APPLE = {1634291234, 7169380, 54321, 0, 0, 0},
+    PENDANT           = {6E65700Eh, 746E6164h, 00000000h, 00000000h, 00000000h, 00000000h},
+    RING              = {6E697208h, 00000067h, 00000000h, 00000000h, 00000000h, 00000000h},
+    PEARL_CHOKER      = {61657012h, 656E6C72h, 00006B63h, 00000000h, 00000000h, 00000000h},
+    EARRINGS          = {72616510h, 676E6972h, 00000073h, 00000000h, 00000000h, 00000000h},
+    DIADEM            = {6169640Ch, 006D6564h, 0000345Fh, 00000000h, 00000000h, 00000000h},
+    FEATHER_EAR_RINGS = {6165661Eh, 72656874h, 72726145h, 73676E69h, 00000000h, 00000000h},
 }
 
 function XP_Train(itemName)
@@ -471,43 +474,67 @@ function XP_Train(itemName)
 end
 
 function Items_Train()
-gg.clearResults()
+    gg.clearResults()
 
-local GIFT = ""
+    local GIFT = ""
 
-local function pretty(t)
-    return GIFT .. "  " .. t 
-end
+    local function pretty(t)
+        return GIFT .. "  " .. t
+    end
 
-local menu = {
-    {
-        label = pretty("👑 • CROWN"),
-        func = function()
-        XP_Train("CROWN")
-end
-    },
-	{
-        label = pretty("🌾 • WHEAT"),
-        func = function()
-       XP_Train("WHEAT")
-end
-    },
-}
+    local menu = {
+        {
+            label = pretty("📿 • PENDANT | LIONTIN"),
+            func = function()
+                XP_Train("PENDANT")
+            end
+        },
+        {
+            label = pretty("💍 • RING | CINCIN"),
+            func = function()
+                XP_Train("RING")
+            end
+        },
+        {
+            label = pretty("🦪 • PEARL CHOKER | KALUNG MUTIARA"),
+            func = function()
+                XP_Train("PEARL_CHOKER")
+            end
+        },
+        {
+            label = pretty("✨ • EARRINGS | ANTING"),
+            func = function()
+                XP_Train("EARRINGS")
+            end
+        },
+        {
+            label = pretty("👑 • DIADEM | MAHKOTA"),
+            func = function()
+                XP_Train("DIADEM")
+            end
+        },
+        {
+            label = pretty("🪶 • FEATHER EAR RINGS | ANTING BULU"),
+            func = function()
+                XP_Train("FEATHER_EAR_RINGS")
+            end
+        },
+    }
 
-local labels = {}
-for i, v in ipairs(menu) do
-    labels[i] = v.label
-end
+    local labels = {}
+    for i, v in ipairs(menu) do
+        labels[i] = v.label
+    end
 
-local choice = gg.choice(labels, nil, "🎯CHOOSE ITEMS")
+    local choice = gg.choice(labels, nil, "🎯CHOOSE ITEMS")
 
-if not choice then
-    gg.toast("SELECT CARD")
-    gg.setVisible(false)
-    return
-end
+    if not choice then
+        gg.toast("SELECT CARD")
+        gg.setVisible(false)
+        return
+    end
 
-menu[choice].func()
+    menu[choice].func()
 end
 function Exit_Script()
 
