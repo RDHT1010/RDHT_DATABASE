@@ -46930,7 +46930,7 @@ function Items_Train()
     local choice = gg.choice(labels, nil, "🎯CHOOSE ITEMS")
 
     if not choice then
-        gg.toast("SELECT CARD")
+        gg.toast("SELECT ITEMS")
         gg.setVisible(false)
         return
     end
