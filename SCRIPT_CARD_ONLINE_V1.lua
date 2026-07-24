@@ -96,28 +96,28 @@ function Get_Account_Info()
     local info
     if USER_EXPIRED == "SAMPAI DIA CAPE DAN PERGI" then
         info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n", 
+            "👤 %s\n📅 %s\n⏳ %s", 
             USER_NAME or "-",
 			getDateTime(),
 			"LIFETIME ♾️"
         )
 	elseif USER_EXPIRED == "UNLIMITED" then
         info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n", 
+            "👤 %s\n📅 %s\n⏳ %s", 
             USER_NAME or "-",
 			getDateTime(),
 			"LIFETIME ♾️"
 		)
 		elseif USER_EXPIRED == "LIFETIME" then
         info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n", 
+            "👤 %s\n📅 %s\n⏳ %s", 
             USER_NAME or "-",
 			getDateTime(),
 			"LIFETIME ♾️"
 		)
     else
         info = string.format(
-            "👤 %s\n📅 %s\n⏳ %s\n",
+            "👤 %s\n📅 %s\n⏳ %s",
             USER_NAME or "-",
 			getDateTime(),
             USER_EXPIRED.."| "..GetRemainingTime(USER_EXPIRED or "")
