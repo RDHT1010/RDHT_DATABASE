@@ -580,12 +580,12 @@ function menuUtama()
 
     if USER_EXPIRED == "SAMPAI DIA CAPE DAN PERGI" then
         Header =
-        " 💻 SCRIPT By IIM | RDHT\n" ..
+        " 💻 SCRIPT By OIIM | RDHT\n" ..
         " 🤝 SUPPORTED By : MF HOST\n" ..
         "════════════════\n"
     else
         Header =
-        " 💻 SCRIPT BY IIM | RDHT\n" ..
+        " 💻 SCRIPT BY OIIM | RDHT\n" ..
         "════════════════\n"
     end
 
