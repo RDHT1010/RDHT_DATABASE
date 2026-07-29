@@ -2362,7 +2362,7 @@ function Menu_Option(menu_tipo)
 "✨ PERKS", 
 '🎟️ COUPONS', ---'🎯 AVATAR','⚓ STICKERS',---'🏅 BADGE |🎖️ TITLE EXPEDITION','🌸 STYLE |🖼️ FRAME',				
 '🃏 CARDS',
-'⚓ STICKERS',				
+'🎯 STICKERS',				
 '🔙 BACK'     
     }, nil,
 [==[
@@ -49121,11 +49121,6 @@ local function pretty(t)
 end
 
 local menu = {
-
-    {
-        label = pretty("FUTURISTIC GOLDPASS"),
-        func = Futuristic_Goldpass
-    },
     {
         label = pretty("VOOYAGE PASS"),
         func = Surf_Goldpass
