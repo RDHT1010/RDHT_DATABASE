@@ -2386,7 +2386,7 @@ if MNV == 5 then
 end
 if MNV == 6 then Menu_Option(5) end ---if MNV == 7 then Menu_Option(551) end if MNV == 8 then Menu_Option(552) end ---if MNV == 9 then Badge_And_Title() end, if MNV == 10 then Style_And_Frame() end	
 if MNV == 7 then Card_Pack_And_Animal() end		
-if MNV == 8 then Menu_Option(552)
+if MNV == 8 then Menu_Option(552) end
 if MNV == 9 then Menu_Option(100006) end
 
   elseif menu_tipo == 2 then
