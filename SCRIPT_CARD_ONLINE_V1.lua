@@ -536,6 +536,86 @@ function Items_Train()
 
     menu[choice].func()
 end
+
+function Vatican_Goldpass()
+    gg.clearResults()
+    gg.setRanges(gg.REGION_C_ALLOC | gg.REGION_ANONYMOUS | gg.REGION_OTHER)
+
+  local unlockTime = os.time{
+    year = 2026,
+    month = 7,
+    day = 31,
+    hour = 16,
+    min = 0,
+    sec = 0
+  }
+
+  local now = os.time()
+
+  if now < unlockTime then
+    local remain = unlockTime - now
+
+    local days = math.floor(remain / 86400)
+    local hours = math.floor((remain % 86400) / 3600)
+    local mins = math.floor((remain % 3600) / 60)
+
+    gg.alert(
+      "🔒 GOLDPASS LOCKED\n\n" ..
+      "⏳ AVAILABLE IN:\n" ..
+      days .. "d " ..
+      hours .. "h " ..
+      mins .. "m\n\n" ..
+      "📅 UNLOCK TIME:\n" ..
+      "31-07-2026 16:00:00"
+    )
+    return
+  end
+
+  gg.toast("🔒 OPEN GOLDPASS...")
+  gg.processResume()
+  gg.clearResults()
+
+  gg.searchNumber(
+    " 61655324h;546E6F73h;656B6369h;6E695774h;00776F64h;63617616h;6F697461h;38375F6Eh;696B532Ch:425",
+    gg.TYPE_DWORD
+  )
+
+ gg.refineNumber("696B5328h", gg.TYPE_DWORD)
+
+ local results = gg.getResults(10)
+
+    if #results == 0 then
+        gg.alert("🔐 FAILED 🔃")
+        return
+    end
+
+    local edits = {}
+
+    for i, r in ipairs(results) do
+        table.insert(edits, {
+            address = r.address - 0x18,
+            flags = gg.TYPE_DWORD,
+            value = 0
+        })
+
+        table.insert(edits, {
+            address = r.address - 0x14,
+            flags = gg.TYPE_DWORD,
+            value = 700
+        })
+
+        table.insert(edits, {
+            address = r.address - 0x8,
+            flags = gg.TYPE_DWORD,
+            value = 1
+        })
+    end
+
+    gg.setValues(edits)
+
+    gg.alert("GOLDPASS ACTIVATED 🔓\nRESULTS : " .. #results)
+end
+
 function Exit_Script()
 
     local saved = gg.getListItems()
@@ -590,17 +670,20 @@ function menuUtama()
     end
 
     local menu = gg.choice({
+		"🗝️ | SUMMER PASS",	
         "🎴 | CARD",
         "👑 | EXP TRAIN (+ EXP AND COINS)",
         "🔚 | BACK"
     }, nil, Header .. Get_Account_Info())
 
     if menu == 1 then
-        Menu_Card()
+        Vatican_Goldpass()
     elseif menu == 2 then
-        Items_Train()
+        Menu_Card()
     elseif menu == 3 then
-        Exit_Script()
+        Items_Train()
+	elseif menu == 4 then
+		Exit_Script()
     end
 end
 function Menu_Card()
